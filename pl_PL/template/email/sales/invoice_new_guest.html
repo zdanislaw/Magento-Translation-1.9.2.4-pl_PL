@@ -1,0 +1,52 @@
+<!--@subject  {{var store.getFrontendName()}}: Faktura nr {{var invoice.increment_id}} do Zamówienia nr {{var order.increment_id}} @-->
+<!--@vars
+{"store url=\"\"":"Store Url",
+"var logo_url":"Email Logo Image Url",
+"var logo_alt":"Email Logo Image Alt",
+"htmlescape var=$order.getCustomerName()":"Customer Name",
+"var store.getFrontendName()":"Store Name",
+"store url=\"customer/account/\"":"Customer Account Url",
+"var invoice.increment_id":"Invoice Id",
+"var order.increment_id":"Order Id",
+"var order.billing_address.format('html')":"Billing Address",
+"var payment_html":"Payment Details",
+"var order.shipping_address.format('html')":"Shipping Address",
+"var order.shipping_description":"Shipping Description",
+"layout area=\"frontend\" handle=\"sales_email_order_invoice_items\" invoice=$invoice order=$order":"Invoice Items Grid",
+"var comment":"Invoice Comment"}
+@-->
+<!--@styles
+@-->
+
+
+{{template config_path="design/email/header"}}
+{{inlinecss file="email-inline.css"}}
+
+<table cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <td>
+            {{template config_path="design/email/order-header"}}
+        </td>
+    </tr>
+    <tr>
+        <td class="order-details">
+            <h3>Twoja Faktura nr <span class="no-link">{{var invoice.increment_id}}</span></h3>
+            <p>do Zamówienia nr <span class="no-link">{{var order.increment_id}}</span></p>
+        </td>
+    </tr>
+    <tr class="order-information">
+        <td>
+            {{if comment}}
+            <table cellspacing="0" cellpadding="0" class="message-container">
+                <tr>
+                    <td>{{var comment}}</td>
+                </tr>
+            </table>
+            {{/if}}
+            {{layout area="frontend" handle="sales_email_order_invoice_items" invoice=$invoice order=$order}}
+            {{template config_path="design/email/billing-shipping-summary"}}
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer"}}
